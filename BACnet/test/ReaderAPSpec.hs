@@ -18,12 +18,12 @@ specInternal = do
       it "returns success ()" $ do
         R.bacRead R.nullAP (BS.singleton 0x00) `shouldBe` (Just (),BS.empty)
 
-{-
       it "consumes 1 byte (the head)" $ do
         property $ \ws -> 
           let bs = BS.pack ws in
-          R.readit R.readNullAP (BS.cons 0x00 bs) `shouldBe` Just((), bs)
+          R.bacRead R.nullAP (BS.cons 0x00 bs) `shouldBe` (Just (), bs)
 
+{-
     context "when the head of a ByteString is not 0x00" $ do
       it "returns failure" $ do
         property $ 
