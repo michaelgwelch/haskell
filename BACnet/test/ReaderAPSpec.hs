@@ -16,19 +16,18 @@ specInternal = do
   describe "readNullAP" $ do
     context "when the head of a ByteString is 0x00" $ do
       it "returns success ()" $ do
-        R.bacRead R.nullAP (BS.singleton 0x00) `shouldBe` (Just (),BS.empty)
+        R.bacRead R.nullAP (BS.singleton 0x00) `shouldBe` Just ((),BS.empty)
 
       it "consumes 1 byte (the head)" $ do
         property $ \ws -> 
           let bs = BS.pack ws in
-          R.bacRead R.nullAP (BS.cons 0x00 bs) `shouldBe` (Just (), bs)
+          R.bacRead R.nullAP (BS.cons 0x00 bs) `shouldBe` Just ((), bs)
 
     context "when the head of a ByteString is not 0x00" $ do
       it "returns failure" $ do
         property $ 
           forAll (choose (1,255)) 
-            (\b -> let (val, _) = R.bacRead R.nullAP (BS.singleton b) in
-                   val `shouldBe` Nothing)
+            (\b -> R.bacRead R.nullAP (BS.singleton b) `shouldBe` Nothing)
 
 {-
     context "when the ByteString is empty" $ do
