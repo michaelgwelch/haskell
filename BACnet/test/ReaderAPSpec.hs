@@ -1,8 +1,8 @@
-module ReaderSpec where
+module ReaderAPSpec where
 
 import Test.Hspec
 import Test.QuickCheck
-import qualified Reader as R
+import qualified ReaderAP as R
 import qualified Data.ByteString as BS
 
 
@@ -33,7 +33,7 @@ specInternal = do
       it "returns failure" $ do
         R.readit R.readNullAP (BS.empty) `shouldBe` Nothing
 
-
+{-
   describe "readNullCS" $ do
     context "when the head of a ByteString is 0x89" $ do
       it "returns failure" $ do
@@ -42,3 +42,4 @@ specInternal = do
     it "reads 0x08" $ do
       R.readit (R.readNullCS 0) (BS.singleton 0x08) `shouldBe` Just((),BS.empty)
 
+-}

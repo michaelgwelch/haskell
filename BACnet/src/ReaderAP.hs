@@ -1,4 +1,4 @@
-module Reader where
+module ReaderAP where
 
 import qualified Data.ByteString as BS
 import Data.Word (Word8, Word16, Word32)
