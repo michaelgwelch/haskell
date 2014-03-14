@@ -23,13 +23,14 @@ specInternal = do
           let bs = BS.pack ws in
           R.bacRead R.nullAP (BS.cons 0x00 bs) `shouldBe` (Just (), bs)
 
-{-
     context "when the head of a ByteString is not 0x00" $ do
       it "returns failure" $ do
         property $ 
           forAll (choose (1,255)) 
-            (\b -> R.readit R.readNullAP (BS.singleton b) `shouldBe` Nothing)
+            (\b -> let (val, _) = R.bacRead R.nullAP (BS.singleton b) in
+                   val `shouldBe` Nothing)
 
+{-
     context "when the ByteString is empty" $ do
       it "returns failure" $ do
         R.readit R.readNullAP (BS.empty) `shouldBe` Nothing
