@@ -29,11 +29,11 @@ specInternal = do
           forAll (choose (1,255)) 
             (\b -> R.bacRead R.nullAP (BS.singleton b) `shouldBe` Nothing)
 
-{-
     context "when the ByteString is empty" $ do
       it "returns failure" $ do
-        R.readit R.readNullAP (BS.empty) `shouldBe` Nothing
+        R.bacRead R.nullAP (BS.empty) `shouldBe` Nothing
 
+{-
   describe "readNullCS" $ do
     context "when the head of a ByteString is 0x89" $ do
       it "returns failure" $ do
