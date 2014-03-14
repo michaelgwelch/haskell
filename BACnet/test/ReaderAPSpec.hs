@@ -8,7 +8,7 @@ import qualified Data.ByteString as BS
 
 spec :: Spec
 spec = do
-  context "All readers take a ByteString and return Maybe (a,ByteString)."
+  context "All readers of type ByteString -> Maybe (a,ByteString)."
     specInternal
 
 specInternal :: Spec
@@ -16,8 +16,9 @@ specInternal = do
   describe "readNullAP" $ do
     context "when the head of a ByteString is 0x00" $ do
       it "returns success ()" $ do
-        R.readit R.readNullAP (BS.singleton 0x00) `shouldBe` Just ((),BS.empty)
+        R.bacRead R.nullAP (BS.singleton 0x00) `shouldBe` (Just (),BS.empty)
 
+{-
       it "consumes 1 byte (the head)" $ do
         property $ \ws -> 
           let bs = BS.pack ws in
@@ -33,7 +34,6 @@ specInternal = do
       it "returns failure" $ do
         R.readit R.readNullAP (BS.empty) `shouldBe` Nothing
 
-{-
   describe "readNullCS" $ do
     context "when the head of a ByteString is 0x89" $ do
       it "returns failure" $ do
