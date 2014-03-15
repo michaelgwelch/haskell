@@ -1,4 +1,7 @@
-module ReaderAP (bacRead, nullAP) where
+module ReaderAP (
+  bacRead, 
+  nullAP,
+  boolAP) where
 
 import qualified Data.ByteString as BS
 import Data.Word
@@ -28,6 +31,13 @@ instance Monad Reader where
   (>>=) = bindReader
 
 nullAP :: Reader ()
-nullAP = do
-  b <- byte
-  if b == 0x00 then success () else failure
+nullAP = byte >>= \b ->
+         if b == 0x00 then success () else failure
+
+
+boolAP :: Reader Bool
+boolAP = byte >>= \b -> 
+         case b of
+           0x10 -> success False
+           0x11 -> success True
+           _    -> failure
