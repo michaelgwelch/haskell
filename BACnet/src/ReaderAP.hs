@@ -1,5 +1,5 @@
 module ReaderAP (
-  bacRead, 
+  bacRead,
   nullAP,
   boolAP) where
 
@@ -9,13 +9,13 @@ import Data.Word
 data Reader a = R (BS.ByteString -> Maybe (a, BS.ByteString))
 
 bacRead :: Reader a -> BS.ByteString -> Maybe (a, BS.ByteString)
-bacRead (R f) bs = f bs
+bacRead (R f) = f
 
 success :: a -> Reader a
 success a = R (\input -> Just (a, input))
 
 failure :: Reader a
-failure = R (\input -> Nothing)
+failure = R (const Nothing)
 
 byte :: Reader Word8
 byte = R (\input -> if BS.null input then Nothing
@@ -36,7 +36,7 @@ nullAP = byte >>= \b ->
 
 
 boolAP :: Reader Bool
-boolAP = byte >>= \b -> 
+boolAP = byte >>= \b ->
          case b of
            0x10 -> success False
            0x11 -> success True
